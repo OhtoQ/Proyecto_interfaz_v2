@@ -1,0 +1,159 @@
+name: Fuerza de origen magnético sobre conductores
+objective: El alumno comprenderá los efectos producidos por la interacción de campos magnéticos y obtendrá el modelo matemático de la fuerza magnética sobre conductores con corriente eléctrica.
+actions:
+  corrienteOn:
+    name: Encender corriente
+  corrienteOff:
+    name: Apagar corriente
+  velocidadBaja:
+    name: velocidad Baja
+    type: toggle
+  velocidadMedia:
+    name: velocidad Media
+    type: toggle
+  velocidadAlta:
+    name: velocidad Alta
+    type: toggle
+  motorDerecha:
+    name: Derecha
+    type: toggle
+  motorIzquierda:
+    name: Izquierda
+    type: toggle
+  corrienteMode:
+    name: Ajustar corriente
+    type: slider
+    minValue: 66
+    maxValue: 99
+    step: 1
+  positionPlacaG:
+    name: Posición gruesa de la placa
+    type: slider
+    minValue: 0
+    maxValue: 1500
+    step: 1
+  positionPlacaF:
+    name: Posición fina de la placa
+    type: slider
+    minValue: 0
+    maxValue: 100
+    step: 1
+  selectPlaca:
+    name: Seleccionar una placa
+    type: selector
+    values:
+      placaA: Placa 1
+      placaB: Placa 2
+      placaC: Placa 3
+      placaD: Placa 4
+      placaE: Placa 5
+      placaF: Placa 6  
+  unkownCommand:
+    name: Comando desconocido
+
+data:
+  opticaPositionD:
+    name: Limite seguro derecho
+    labels:
+      0: Dentro del sistema
+      1: Fuera del sistema
+  opticaPositionI:
+    name: Limite seguro izquierdo
+    labels:
+      0: Dentro del sistema
+      1: Fuera del sistema
+  mecanicaPositionD:
+    name: Limite peligroso derecho
+    labels:
+      0: Dentro del sistema (limite max)
+      1: Fuera del sistema (limite max)
+  mecanicaPositionI:
+    name: Limite peligroso izquierdo
+    labels:
+      0: Dentro del sistema (limite max)
+      1: Fuera del sistema (limite max)
+  pwmLedValue:
+    name: Valor de PWM del led
+    units: grados
+  desplazamiento:
+    name: Motor a pasos
+    labels:
+      false: Apagada
+      true: Encendida
+  otherData:
+    name: Other data
+
+videos:
+  temperatureVideo:
+    name: Monitor de temperatura
+    url: http://159.223.156.70:8080?action=stream
+    width: 640
+    height: 480
+
+pages:
+  - instructions:
+      - Seleccione una placa.
+      - En caso de no estar posicionada mueva la placa con los sliders.
+      - Asegurese de que la placa seleccionada quede dentro de los limites del imán.
+      #- Verifique que la corriente esté dentro del rango 0.5 - 4 A.
+    dataIds:
+      - pwmLedValue
+      - opticaPositionD
+      - opticaPositionI
+      - mecanicaPositionD
+      - mecanicaPositionI
+      - desplazamiento
+    actionIds:
+      - selectPlaca
+      - motorDerecha
+      - motorIzquierda
+      - velocidadAlta
+      - velocidadMedia
+      - velocidadBaja
+      - unkownCommand
+    videoIds:
+      - temperatureVideo
+  - instructions:
+      - Variar la corriente de 0.5A a 3A.
+      - Las muestras deben variar a 0.5A de la anterior.
+      - Cuando se tenga el valor deseado de la primera muestra de corriente encender el suministro de energía.
+      - Al terminar apagar el suministro de energía.
+    dataIds:
+      - pwmLedValue
+    actionIds:
+      - corrienteOn
+      - corrienteOff
+      - corrienteMode
+    videoIds:
+      - temperatureVideo
+  - instructions:
+      - Variar y seleccionar un valor de corriente para mantenerla constante.
+    dataIds:
+      - pwmLedValue
+    actionIds:
+      - corrienteMode
+    videoIds:
+      - temperatureVideo
+  - instructions:
+      - Seleccionar y posicionar cada placa dentro de los limittes del imán.
+      - El suministro de energía debe estar apagado, después de posicionar las placas se debe encender.
+      - Antes de volver a mover las placas se debe apagar el suministro de energía.
+      - Estos pasos se repiten las veces necesarias y al cabar con el experimento se debe apagar el suministro de energía.
+    dataIds:
+      - pwmLedValue
+      - opticaPositionD
+      - opticaPositionI
+      - mecanicaPositionD
+      - mecanicaPositionI
+      - desplazamiento
+    actionIds:
+      - corrienteOn
+      - corrienteOff
+      - selectPlaca
+      - motorDerecha
+      - motorIzquierda
+      - velocidadAlta
+      - velocidadMedia
+      - velocidadBaja
+    videoIds:
+      - temperatureVideo
